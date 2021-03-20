@@ -1,14 +1,14 @@
 module "global" {
-  source = "../modules//global"
+  source = "../../modules/global"
 }
 
 terraform {
   backend "remote" {
-    hostname = "app.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "mikesupertrampstr"
 
     workspaces {
-      name = "github.com"
+      name = "github-com"
     }
   }
 }
