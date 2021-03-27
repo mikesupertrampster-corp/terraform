@@ -23,5 +23,5 @@ module "repositories" {
   name                   = each.key
   topics                 = each.value["topics"]
   visibility             = each.value["visibility"]
-  required_status_checks = { Gitleaks = true }
+  required_status_checks = { "gitleaks" = true }
 }
