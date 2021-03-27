@@ -1,7 +1,7 @@
 # Imported
 resource "tfe_organization" "main" {
-  name  = module.global.variables["terraform"]["org"]["name"]
-  email = module.global.variables["terraform"]["org"]["email"]
+  name  = var.org
+  email = var.email
 
   lifecycle {
     ignore_changes = [email]
@@ -38,7 +38,7 @@ resource "tfe_variable" "variables" {
 
 resource "tfe_team_member" "members" {
   for_each = merge(flatten([for key, value in tfe_team.teams :
-    [for user in module.global.variables["terraform"]["org"]["users"] : { tostring(user) = value["id"] }]
+    [for user in var.users : { tostring(user) = value["id"] }]
   ])...)
 
   team_id  = each.value
