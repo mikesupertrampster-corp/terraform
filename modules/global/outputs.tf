@@ -1,12 +1,19 @@
+variable "name" {
+  type    = string
+  default = "mikesupertrampstr"
+}
+
 output "variables" {
   value = {
     github = {
-      owner = "mikesupertrampster"
+      org            = "mikesupertrampster"
+      default_branch = "master"
     }
     terraform = {
       org = {
-        name  = "mikesupertrampstr"
-        email = "mike.super.trampster@gmail.com"
+        name  = var.name
+        email = "mikesupertrampster@gmail.com"
+        users = [var.name]
       }
     }
   }

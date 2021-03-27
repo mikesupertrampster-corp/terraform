@@ -1,6 +1,8 @@
 resource "github_repository" "repository" {
-  name       = var.name
-  visibility = var.visibility
+  name        = var.name
+  description = var.description
+  topics      = var.topics
+  visibility  = var.visibility
 
   has_downloads = var.has_downloads
   has_issues    = var.has_issues
@@ -13,7 +15,7 @@ resource "github_repository" "repository" {
 
 resource "github_branch" "master" {
   repository = github_repository.repository.id
-  branch     = "master"
+  branch     = var.default_branch
 }
 
 resource "github_branch_default" "default" {

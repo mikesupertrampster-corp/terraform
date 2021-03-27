@@ -1,7 +1,3 @@
-module "global" {
-  source = "../../modules/global"
-}
-
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
@@ -13,6 +9,8 @@ terraform {
   }
 }
 
-provider "github" {
-  owner = module.global.variables["github"]["owner"]
+module "global" {
+  source = "../../modules/global"
 }
+
+provider "github" {}
