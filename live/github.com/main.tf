@@ -19,9 +19,12 @@ module "repositories" {
     }
   ])...)
 
-  source                 = "../../modules/github/repository"
-  name                   = each.key
-  topics                 = each.value["topics"]
-  visibility             = each.value["visibility"]
-  required_status_checks = { "gitleaks" = true }
+  source                   = "app.terraform.io/mikesupertrampstr/github-repository/module"
+  version                  = "1.0.0"
+  name                     = each.key
+  topics                   = each.value["topics"]
+  visibility               = each.value["visibility"]
+  required_status_checks   = { "gitleaks" = true }
+  github_branch_protection = each.value["visibility"] == "private"
+  push_restrictions        = []
 }
