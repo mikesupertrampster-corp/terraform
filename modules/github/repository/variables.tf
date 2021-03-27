@@ -41,3 +41,13 @@ variable "topics" {
   type    = list(string)
   default = []
 }
+
+variable "required_status_checks" {
+  type    = map(string)
+  default = {}
+}
+
+variable "push_restrictions" {
+  type    = list(string)
+  default = []
+}

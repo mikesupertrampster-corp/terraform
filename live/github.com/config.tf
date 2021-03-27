@@ -9,8 +9,4 @@ terraform {
   }
 }
 
-module "global" {
-  source = "../../modules/global"
-}
-
 provider "github" {}
