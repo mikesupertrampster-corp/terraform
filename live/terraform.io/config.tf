@@ -14,3 +14,7 @@ terraform {
 }
 
 provider "tfe" {}
+
+provider "github" {
+  organization = module.global.variables["github"]["org"]
+}

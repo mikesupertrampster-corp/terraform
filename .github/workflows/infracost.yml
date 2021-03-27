@@ -1,0 +1,17 @@
+name: Infracost
+on: push
+jobs:
+  infracost:
+    runs-on: ubuntu-latest
+    name: Show infracost diff
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run infracost diff
+        uses: infracost/infracost-gh-action@master
+        env:
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          TF_CLI_ARGS_init: '-backend-config="token=${{ secrets.TFE_TOKEN }}"'
+        with:
+          path: live/github.com
+          entrypoint: /scripts/ci/diff.sh

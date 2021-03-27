@@ -26,3 +26,18 @@ variable "has_wiki" {
   type    = bool
   default = false
 }
+
+variable "default_branch" {
+  type    = string
+  default = "master"
+}
+
+variable "description" {
+  type    = string
+  default = "Maintained by Terraform"
+}
+
+variable "topics" {
+  type    = list(string)
+  default = []
+}
