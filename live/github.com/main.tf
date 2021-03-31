@@ -9,13 +9,17 @@ locals {
     terraform-module = {
       github-repository = { visibility = "public", topics = ["terraform", "module", "github"] }
     }
+
+    docker-builds = {
+      simple-json-server = { visibility = "public", topics = ["docker", "golang", "json", "http"] }
+    }
   }
 }
 
 module "repositories" {
   for_each = merge(flatten([
     for type, repos in local.repositories : {
-      for repo, attr in repos : (tostring(type) == "standalone" ? repo : "${type}-${repo}") => attr
+      for repo, attr in repos : (tostring(type) == "terraform-module" ? "${type}-${repo}" : repo) => attr
     }
   ])...)
 
