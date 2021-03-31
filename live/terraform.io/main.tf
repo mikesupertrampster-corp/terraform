@@ -16,11 +16,22 @@ resource "tfe_team" "teams" {
 }
 
 resource "tfe_workspace" "all" {
-  for_each       = toset(["terraform-io", "github-com", "k8s-development"])
-  name           = each.key
-  organization   = tfe_organization.main.id
-  queue_all_runs = false
-  execution_mode = "local"
+  for_each          = var.workspaces
+  name              = each.key
+  organization      = tfe_organization.main.id
+  queue_all_runs    = true
+  execution_mode    = each.value["exec"]
+  working_directory = each.value["workdir"]
+
+  vcs_repo {
+    identifier         = var.vcs_repo
+    ingress_submodules = false
+    oauth_token_id     = ""
+  }
+
+  lifecycle {
+    ignore_changes = [vcs_repo.0.oauth_token_id]
+  }
 }
 
 resource "tfe_variable" "variables" {
