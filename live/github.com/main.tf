@@ -1,10 +1,19 @@
+data "github_user" "current" { username = "" }
+
 locals {
+  owner = data.github_user.current.name
+
+  templates = {
+    docker = { owner = local.owner, repository = "simple-json-server" }
+    go     = { owner = local.owner, repository = "algo-api" }
+  }
+
   repositories = {
     standalone = {
       nixos             = { visibility = "public", topics = ["nixos", "nix", "linux"] }
       terraform         = { visibility = "public", topics = ["terraform", "github", "k8s"] }
       trader            = { visibility = "private", topics = ["finance", "golang", "grafana", "fluxdb"] }
-//      gangway-kube-conf = { visibility = "public", topics = ["golang", "k8s", "idp"] }
+      gangway-kube-conf = { visibility = "public", topics = ["golang", "k8s", "idp"], template = local.templates.go }
     }
 
     terraform-module = {
@@ -16,9 +25,9 @@ locals {
     }
 
     algo = {
-      api = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
-      # batch-collector = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
-      # feeder = { visibility = "public", topics = ["golang", "prometheus", "json", "http", "finance"] }
+      api             = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
+      batch-collector = { visibility = "public", topics = ["golang", "json", "http", "finance"], template = local.templates.go }
+      feeder          = { visibility = "public", topics = ["golang", "prometheus", "json", "http", "finance"], template = local.templates.go }
     }
   }
 
@@ -40,4 +49,5 @@ module "repositories" {
   required_status_checks   = { "gitleaks" = true }
   github_branch_protection = each.value["visibility"] == "private"
   push_restrictions        = []
+  template                 = lookup(each.value, "template", { owner = null, repository = null })
 }
