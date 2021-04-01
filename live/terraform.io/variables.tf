@@ -19,13 +19,13 @@ variable "vcs_repo" {
 }
 
 variable "workspaces" {
-  type    = map(map(string))
+  type = map(map(string))
   default = {
-    "terraform-io"    = {
+    "terraform-io" = {
       workdir = "live/terraform.io"
       exec    = "remote"
     }
-    "github-com"      = {
+    "github-com" = {
       workdir = "live/github.com"
       exec    = "remote"
     }
