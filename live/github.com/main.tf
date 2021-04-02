@@ -12,7 +12,6 @@ locals {
     standalone = {
       nixos             = { visibility = "public", topics = ["nixos", "nix", "linux"] }
       terraform         = { visibility = "public", topics = ["terraform", "github", "k8s"] }
-      trader            = { visibility = "private", topics = ["finance", "golang", "grafana", "fluxdb"] }
       gangway-kube-conf = { visibility = "public", topics = ["golang", "k8s", "idp"], template = local.templates.go }
     }
 
@@ -28,6 +27,7 @@ locals {
       api             = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
       batch-collector = { visibility = "public", topics = ["golang", "json", "http", "finance"], template = local.templates.go }
       feeder          = { visibility = "public", topics = ["golang", "prometheus", "json", "http", "finance"], template = local.templates.go }
+      trader          = { visibility = "public", topics = ["finance", "golang", "grafana", "fluxdb"] }
     }
   }
 
@@ -42,7 +42,7 @@ module "repositories" {
   ])...)
 
   source                   = "app.terraform.io/mikesupertrampstr/github-repository/module"
-  version                  = "1.0.2"
+  version                  = "1.0.3"
   name                     = each.key
   topics                   = each.value["topics"]
   visibility               = each.value["visibility"]
