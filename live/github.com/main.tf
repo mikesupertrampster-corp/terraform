@@ -4,16 +4,18 @@ locals {
   owner = data.github_user.current.name
 
   templates = {
-    docker = { owner = local.owner, repository = "simple-json-server" }
-    go     = { owner = local.owner, repository = "algo-api" }
+    docker           = { owner = local.owner, repository = "simple-json-server" }
+    go               = { owner = local.owner, repository = "algo-api" }
+    terraform-module = { owner = local.owner, repository = "terraform-module-github-repository" }
+    terraform        = { owner = local.owner, repository = "terraform" }
   }
 
   repositories = {
     standalone = {
-      nixos             = { visibility = "public", topics = ["nixos", "nix", "linux", "os"] }
-      terraform         = { visibility = "public", topics = ["terraform", "github", "k8s", "hashicorp"] }
       gangway-kube-conf = { visibility = "public", topics = ["golang", "k8s", "idp"] }
+      nixos             = { visibility = "public", topics = ["nixos", "nix", "linux", "os"] }
       packer            = { visibility = "public", topics = ["packer", "hashicorp"] }
+      terraform         = { visibility = "public", topics = ["terraform", "github", "k8s", "hashicorp"] }
     }
 
     terraform-module = {
@@ -44,12 +46,13 @@ module "repositories" {
   ])...)
 
   source                   = "app.terraform.io/mikesupertrampstr/github-repository/module"
-  version                  = "1.0.3"
+  version                  = "1.0.4"
   name                     = each.key
   topics                   = each.value["topics"]
   visibility               = each.value["visibility"]
   required_status_checks   = { "gitleaks" = true }
   github_branch_protection = each.value["visibility"] == "private"
-  push_restrictions        = []
+  is_template              = contains([for t in values(local.templates) : t["repository"]], each.key)
   template                 = lookup(each.value, "template", { owner = null, repository = null })
+  push_restrictions        = []
 }
