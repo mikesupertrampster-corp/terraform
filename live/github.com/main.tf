@@ -10,13 +10,15 @@ locals {
 
   repositories = {
     standalone = {
-      nixos             = { visibility = "public", topics = ["nixos", "nix", "linux"] }
-      terraform         = { visibility = "public", topics = ["terraform", "github", "k8s"] }
-      gangway-kube-conf = { visibility = "public", topics = ["golang", "k8s", "idp"], template = local.templates.go }
+      nixos             = { visibility = "public", topics = ["nixos", "nix", "linux", "os"] }
+      terraform         = { visibility = "public", topics = ["terraform", "github", "k8s", "hashicorp"] }
+      gangway-kube-conf = { visibility = "public", topics = ["golang", "k8s", "idp"] }
+      packer            = { visibility = "public", topics = ["packer", "hashicorp"] }
     }
 
     terraform-module = {
-      github-repository = { visibility = "public", topics = ["terraform", "module", "github"] }
+      github-repository = { visibility = "public", topics = ["terraform", "module", "github", "hashicorp", "terraform-registry"] }
+      tfe-management    = { visibility = "public", topics = ["terraform", "module", "hashicorp", "terraform-registry", "terraform-cloud"] }
     }
 
     docker-builds = {
@@ -25,9 +27,9 @@ locals {
 
     algo = {
       api             = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
-      batch-collector = { visibility = "public", topics = ["golang", "json", "http", "finance"], template = local.templates.go }
-      feeder          = { visibility = "public", topics = ["golang", "prometheus", "json", "http", "finance"], template = local.templates.go }
-      trader          = { visibility = "public", topics = ["finance", "golang", "grafana", "fluxdb"] }
+      batch-collector = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
+      feeder          = { visibility = "public", topics = ["golang", "prometheus", "json", "http", "finance"] }
+      trader          = { visibility = "public", topics = ["finance", "golang", "grafana", "fluxdb", "prometheus"] }
     }
   }
 
