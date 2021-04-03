@@ -1,57 +1,62 @@
-# Imported
-resource "tfe_organization" "main" {
-  name  = var.org
-  email = var.email
-
-  lifecycle {
-    ignore_changes = [email]
-  }
+locals {
+  org            = "mikesupertrampstr"
+  gh_user        = "mikesupertrampster"
+  email          = "${local.gh_user}@gmail.com"
+  terraform_repo = "${local.gh_user}/terraform"
 }
 
-# Imported
-resource "tfe_team" "teams" {
-  for_each     = toset(["owners"])
-  name         = each.key
-  organization = tfe_organization.main.id
+variable "github_token" {
+  type      = string
+  sensitive = true
 }
 
-resource "tfe_workspace" "all" {
-  for_each          = var.workspaces
-  name              = each.key
-  organization      = tfe_organization.main.id
-  queue_all_runs    = true
-  execution_mode    = each.value["exec"]
-  working_directory = each.value["workdir"]
+module "terraform-cloud" {
+  source  = "app.terraform.io/mikesupertrampstr/tfe-management/module"
+  version = "1.0.0"
 
-  vcs_repo {
-    identifier         = var.vcs_repo
-    ingress_submodules = false
-    oauth_token_id     = ""
+  org   = local.org
+  email = local.email
+  users = [local.org]
+
+  github_oauth_token = var.github_token
+
+  workspaces = {
+    "terraform-io" = {
+      workdir  = "live/terraform.io"
+      exec     = "remote"
+      vcs_repo = local.terraform_repo
+
+      variables = [
+        { key = "GITHUB_TOKEN", category = "env" },
+        { key = "TFE_TOKEN", category = "env" },
+      ]
+    }
+    "github-com" = {
+      workdir   = "live/github.com"
+      exec      = "remote"
+      vcs_repo  = local.terraform_repo
+      variables = [{ key = "GITHUB_TOKEN", category = "env" }]
+    }
+    "k8s-development" = {
+      workdir   = "development/k8s"
+      exec      = "local"
+      vcs_repo  = local.terraform_repo
+      variables = []
+    }
   }
 
-  lifecycle {
-    ignore_changes = [vcs_repo.0.oauth_token_id]
+  variables = {
+    "terraform-io" = {
+      GITHUB_TOKEN = var.github_token
+      TFE_TOKEN    = "owners"
+    }
+    "github-com" = {
+      GITHUB_TOKEN = var.github_token
+    }
   }
-}
 
-resource "tfe_variable" "variables" {
-  for_each = {
-    github-com   = { key = "GITHUB_TOKEN", category = "env" }
-    terraform-io = { key = "GITHUB_TOKEN", category = "env" }
-  }
-
-  key          = each.value["key"]
-  value        = null
-  category     = each.value["category"]
-  sensitive    = true
-  workspace_id = tfe_workspace.all[each.key]["id"]
-}
-
-resource "tfe_team_member" "members" {
-  for_each = merge(flatten([for key, value in tfe_team.teams :
-    [for user in var.users : { tostring(user) = value["id"] }]
-  ])...)
-
-  team_id  = each.value
-  username = each.key
+  modules = formatlist("${local.gh_user}/terraform-module-%s", [
+    "github-repository",
+    "tfe-management",
+  ])
 }
