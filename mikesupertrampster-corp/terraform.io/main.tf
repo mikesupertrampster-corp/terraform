@@ -7,6 +7,8 @@ locals {
     vcs  = "github"
     repo = "${local.user}/terraform"
   }
+
+  workspaces = [for path in fileset("${path.root}/..", "**/*/terragrunt.hcl") : replace(path, "//terragrunt.hcl/", "")]
 }
 
 variable "github_token" {
@@ -30,35 +32,18 @@ module "terraform-cloud" {
   }
 
   variables = {
-    "terraform-io" = {
+    for i, workspace in local.workspaces : (replace(workspace, "/(\\.|/)/", "-")) => {
       GITHUB_TOKEN = var.github_token
       TFE_TOKEN    = "owners"
-    }
-    "github-com" = {
-      GITHUB_TOKEN = var.github_token
     }
   }
 
   workspaces = {
-    "terraform-io" = {
-      workdir   = "${local.org}/terraform.io"
+    for i, workspace in local.workspaces : (replace(workspace, "/(\\.|/)/", "-")) => {
+      workdir   = "${local.org}/${workspace}"
       exec      = local.exec
       vcs_repo  = local.vcs_repo
       variables = [for i, v in ["GITHUB_TOKEN", "TFE_TOKEN"] : { key = v, category = "env" }]
-    }
-
-    "github-com" = {
-      workdir   = "${local.org}/github.com"
-      exec      = local.exec
-      vcs_repo  = local.vcs_repo
-      variables = [for i, v in ["GITHUB_TOKEN"] : { key = v, category = "env" }]
-    }
-
-    "k8s-development" = {
-      workdir   = "development/k8s"
-      exec      = local.exec
-      vcs_repo  = local.vcs_repo
-      variables = []
     }
   }
 

@@ -3,5 +3,5 @@ include {
 }
 
 inputs = {
-  github_token = get_env("GITHUB_TOKEN")
+  github_owner = basename(get_parent_terragrunt_dir())
 }
