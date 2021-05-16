@@ -4,4 +4,5 @@ include {
 
 inputs = {
   github_owner = basename(get_parent_terragrunt_dir())
+  region       = "eu-west-2"
 }
