@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    kind = {
+      source  = "unicell/kind"
+      version = "0.0.2-u2"
+    }
+  }
+}
+
 resource "kind_cluster" "local" {
   name           = "terraform"
   node_image     = "kindest/node:v1.20.2"
