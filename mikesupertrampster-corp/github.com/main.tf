@@ -1,3 +1,7 @@
+provider "github" {
+  owner = "mikesupertrampster-corp"
+}
+
 data "github_user" "current" { username = "" }
 
 locals {
@@ -16,6 +20,7 @@ locals {
       nixos             = { visibility = "public", topics = ["nixos", "nix", "linux", "os"] }
       packer            = { visibility = "public", topics = ["packer", "hashicorp"] }
       terraform         = { visibility = "public", topics = ["terraform", "github", "k8s", "hashicorp"] }
+      trader            = { visibility = "public", topics = ["finance", "golang", "grafana", "fluxdb", "prometheus"] }
     }
 
     terraform-module = {
@@ -31,7 +36,6 @@ locals {
       api             = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
       batch-collector = { visibility = "public", topics = ["golang", "json", "http", "finance"] }
       feeder          = { visibility = "public", topics = ["golang", "prometheus", "json", "http", "finance"] }
-      trader          = { visibility = "public", topics = ["finance", "golang", "grafana", "fluxdb", "prometheus"] }
     }
   }
 
@@ -45,8 +49,8 @@ module "repositories" {
     }
   ])...)
 
-  source                   = "app.terraform.io/mikesupertrampstr/github-repository/module"
-  version                  = "1.0.4"
+  source                   = "app.terraform.io/mikesupertrampster-corp/github-repository/module"
+  version                  = "1.0.5"
   name                     = each.key
   topics                   = each.value["topics"]
   visibility               = each.value["visibility"]
