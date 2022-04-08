@@ -1,11 +1,17 @@
 terraform {
   required_providers {
     auth0 = {
-      source  = "alexkappa/auth0"
+      source = "auth0/auth0"
     }
   }
 }
 
 provider "auth0" {
-  domain = "mikesupertrampster.eu.auth0.com"
+  domain = "${var.auth0_domain}.eu.auth0.com"
+}
+
+resource "auth0_client" "terraform" {
+  name     = "Terraform Auth0 Provider"
+  app_type = "non_interactive"
+  logo_uri = "https://symbols.getvecta.com/stencil_97/45_terraform-icon.0fedccc574.svg"
 }
