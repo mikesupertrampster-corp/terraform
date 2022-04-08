@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "auth0" {
-  domain = "${var.auth0_domain}.eu.auth0.com"
+  domain = var.auth0_domain
 }
 
 resource "auth0_client" "terraform" {

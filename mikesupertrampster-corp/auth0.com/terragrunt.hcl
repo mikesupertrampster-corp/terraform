@@ -3,5 +3,5 @@ include {
 }
 
 inputs = {
-  auth0_domain = "mikesupertrampster-eu"
+  auth0_domain = "mikesupertrampster-eu.eu.auth0.com"
 }
