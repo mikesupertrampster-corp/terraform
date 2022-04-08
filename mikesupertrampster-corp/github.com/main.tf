@@ -9,6 +9,7 @@ provider "github" {
 locals {
   repositories = {
     standalone = {
+      aws               = { topics = ["aws", "cloud", "iac", "terraform"], is_template = true, description = "AWS Setup via Terraform" }
       gangway-kube-conf = { topics = ["golang", "k8s", "idp"], description = "Commandline to obtain kube-configuration via gangway" }
       nixos             = { topics = ["nixos", "nix", "linux", "os"], description = "NixOS and Home-Manager configurations" }
       packer            = { topics = ["packer", "hashicorp"], description = "Building images via Hashicorp Packer" }
