@@ -9,13 +9,21 @@ provider "github" {
 locals {
   repositories = {
     standalone = {
-      aws               = { topics = ["aws", "cloud", "iac", "terraform"], is_template = true, description = "AWS Setup via Terraform" }
+      kubernetes-gitops = { topics = ["kubernetes", "gitops"], description = "Gitops repository for kubernetes" }
       gangway-kube-conf = { topics = ["golang", "k8s", "idp"], description = "Commandline to obtain kube-configuration via gangway" }
       nixos             = { topics = ["nixos", "nix", "linux", "os"], description = "NixOS and Home-Manager configurations" }
       packer            = { topics = ["packer", "hashicorp"], description = "Building images via Hashicorp Packer" }
-      terraform         = { topics = ["terraform", "github", "k8s", "hashicorp"], is_template = true, description = "Terraform for Everything" }
       trader            = { topics = ["finance", "golang", "grafana", "fluxdb", "prometheus"], description = "Trader platform using Prometheus & Grafana" }
+      tracing           = { topics = ["opentelemetry", "tracing", "telemetry"], description = "Tracing demo apps" }
       yubikey           = { topics = ["security", "yubikey"], description = "Set up guide for Yubikey (GPG + SSH)" }
+    }
+
+    terraform = {
+      terraform        = { topics = ["terraform", "github", "k8s", "hashicorp"], is_template = true, description = "Terraform for Everything" }
+      terraform-aws    = { topics = ["aws", "cloud", "iac", "terraform"], is_template = true, description = "AWS Setup via Terraform" }
+      terraform-jaeger = { topics = ["terraform", "jaeger", "serverless"], description = "Terraform deployment of jaeger" }
+      terraform-k8s    = { topics = ["terraform", "kubernetes", "k8s"], description = "Terraform deployment of kubernetes" }
+      terraform-vault  = { topics = ["terraform", "hashicorp", "vault", "serverless"], is_template = true, description = "Terraform deployment of Vault" }
     }
 
     terraform-module = {
