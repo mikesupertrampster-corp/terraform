@@ -9,6 +9,7 @@ provider "github" {
 locals {
   repositories = {
     standalone = {
+      blockchain        = { topics = ["blockchain"], description = "Blockchain exercises." }
       kubernetes-gitops = { topics = ["kubernetes", "gitops"], description = "Gitops repository for kubernetes" }
       gangway-kube-conf = { topics = ["golang", "k8s", "idp"], description = "Commandline to obtain kube-configuration via gangway" }
       nixos             = { topics = ["nixos", "nix", "linux", "os"], description = "NixOS and Home-Manager configurations" }
