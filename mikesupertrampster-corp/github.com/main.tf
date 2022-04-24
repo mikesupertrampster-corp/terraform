@@ -17,6 +17,7 @@ locals {
       trader            = { topics = ["finance", "golang", "grafana", "fluxdb", "prometheus"], description = "Trader platform using Prometheus & Grafana" }
       tracing           = { topics = ["opentelemetry", "tracing", "telemetry"], description = "Tracing demo apps" }
       yubikey           = { topics = ["security", "yubikey"], description = "Set up guide for Yubikey (GPG + SSH)" }
+      web3              = { topics = ["web3"], description = "Playground for web3 development" }
     }
 
     terraform = {
