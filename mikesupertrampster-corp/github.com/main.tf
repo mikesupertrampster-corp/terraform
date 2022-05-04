@@ -24,6 +24,7 @@ locals {
     terraform = {
       terraform        = { topics = ["terraform", "github", "k8s", "hashicorp"], is_template = true, description = "Terraform for Everything" }
       terraform-aws    = { topics = ["aws", "cloud", "iac", "terraform"], is_template = true, description = "AWS Setup via Terraform" }
+      terraform-github = { topics = ["terraform", "github"], description = "Terraform configuration of github" }
       terraform-jaeger = { topics = ["terraform", "jaeger", "serverless"], description = "Terraform deployment of jaeger" }
       terraform-k8s    = { topics = ["terraform", "kubernetes", "k8s"], description = "Terraform deployment of kubernetes" }
       terraform-vault  = { topics = ["terraform", "hashicorp", "vault", "serverless"], is_template = true, description = "Terraform deployment of Vault" }
