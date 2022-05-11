@@ -1,5 +1,8 @@
 terraform {
   required_providers {
+    datadog = {
+      source = "DataDog/datadog"
+    }
     pagerduty = {
       source = "PagerDuty/pagerduty"
     }
@@ -64,4 +67,10 @@ resource "pagerduty_escalation_policy" "teams" {
       id   = each.value.id
     }
   }
+}
+
+resource "datadog_integration_pagerduty" "pd" {
+  schedules = concat([for name, schedule in pagerduty_schedule.schedules : "https://${var.pd_subdomain}.${var.pd_region}.pagerduty.com/schedules/${schedule.id}"])
+  subdomain = var.pd_subdomain
+  api_token = var.dd_pd_api_token
 }

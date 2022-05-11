@@ -3,6 +3,9 @@ include {
 }
 
 inputs = {
+  pd_subdomain = "mikesupertrampster-corp"
+  pd_region    = "eu"
+
   users = {
     "John Smith" = {
       email     = "platform@mikesupertrampster.com"
