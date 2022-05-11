@@ -13,10 +13,4 @@ inputs = {
   teams = {
     "Platform Engineer" = ["John Smith"]
   }
-
-  services = {
-    vault = {
-      team = "Platform Engineer"
-    }
-  }
 }

@@ -3,10 +3,6 @@ variable "time_zone" {
   default = "UTC"
 }
 
-variable "services" {
-  type = map(map(string))
-}
-
 variable "teams" {
   type = map(list(string))
 }
